@@ -36,7 +36,7 @@ function AppRoutes({ result, setResult, loading, setLoading }) {
         element={
           <div>
             <UploadCV setResult={setResult} setLoading={setLoading} />
-            {loading && <p style={{ textAlign: "center" }}>Loading...</p>}
+            {loading && <p style={{ textAlign: "center" }}>Uploading...</p>}
             {!loading && result && <CVResult data={result} />}
           </div>
         }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getJobDetails, getJobMatches } from "../api";
 import "./JobDetails.css";
 import { useParams } from "react-router-dom";
+import UploadCV from "./UploadCV";
 
 const JobDetails = () => {
   const { jobId } = useParams(); // Récupère jobId depuis l'URL
@@ -9,6 +10,8 @@ const JobDetails = () => {
   const [job, setJob] = useState(null);
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [result, setResult] = useState(null);
+  const [loading1, setLoading1] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,28 +33,34 @@ const JobDetails = () => {
     if (jobId) fetchData(); 
   }, [jobId]); //  Dépendance pour éviter boucle infinie
 
-  if (loading) return <h1 style={{textAlign:"center"}}>Loading...</h1>;
+  if (loading && job) return( 
+    <div className="job-details-container">
+      <h2>{job.title} @ {job.company}</h2>
+      <p><strong>Location:</strong> {job.location}</p>
+      {job.salary && (<p><strong>Salary:</strong> {job.salary}  </p> )}
+      <p><strong>Description:</strong></p>
+      <p>{job.description}</p>
+        <h3 style={{textAlign:"center"}}>Reloading Candidate Matches...</h3>
+        </div>);
+
   if (!job) return <p>Job not found</p>;
 
   return (
     <div className="job-details-container">
-      <h2>
-        {job.title} @ {job.company}
-      </h2>
-      <p>
-        <strong>Location:</strong> {job.location}
-      </p>
-      {job.salary && (
-        <p>
-          <strong>Salary:</strong> {job.salary}
-        </p>
-      )}
-      <p>
-        <strong>Description:</strong>
-      </p>
+      <h2>{job.title} @ {job.company}</h2>
+      <p><strong>Location:</strong> {job.location}</p>
+      {job.salary && (<p><strong>Salary:</strong> {job.salary}  </p> )}
+      <p><strong>Description:</strong></p>
       <p>{job.description}</p>
 
-      <h3>Candidate Matches</h3>
+
+      <h3 className="job-title">Candidate Matches: 
+      <div className="upload-inline">
+            <UploadCV   setResult={setResult} setLoading={setLoading1}/>
+                  {loading1 && <p style={{ textAlign: "center" }}>Uploading...</p>}
+                  {!loading1 && result && <p> CV Uploaded Successfully </p> && window.location.reload()} 
+      </div>
+      </h3>
       {matches.length === 0 ? (
         <p>No candidates matched yet.</p>
       ) : (

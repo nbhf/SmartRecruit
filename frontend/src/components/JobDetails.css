@@ -6,12 +6,15 @@
   background: #ffffff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 25px;
 }
 
 .matches-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 15px;
+  margin-top: 1px;
+  font-size: 15px;
+  
 }
 
 .matches-table th,
@@ -27,4 +30,48 @@
 
 .matches-table tr:nth-child(even) {
   background-color: #fafafa;
+}
+
+
+
+.job-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 30px; 
+}
+
+.upload-inline {
+  transform: scale(0.8); 
+  margin-left: 20px;
+  font-size: 20px; 
+}
+
+.upload-inline .upload-container {
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(244, 243, 243, 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+.upload-inline .upload-container input {
+  margin-bottom: 0px;
+}
+
+.upload-inline  .upload-container h1 {
+  display: none;
+}
+
+.upload-inline .upload-container button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.uploadcv-jobdetails .upload-container button:hover {
+  background-color: #0056b3;
 }
