@@ -29,7 +29,7 @@ def add_job():
 @job_bp.route("/jobs/all", methods=["GET"])
 def get_all_jobs():
     jobs = JobOffer.query.order_by(JobOffer.created_at.desc()).all()
-    result = [ { "id": job.id, "title": job.title, "company": job.company } for job in jobs ]
+    result = [ { "id": job.id, "title": job.title, "company": job.company , "location": job.location } for job in jobs ]
     return jsonify(result)
 
 

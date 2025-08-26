@@ -8,10 +8,10 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.job-list-container h2 {
+.job-list-container h1 {
   margin-bottom: 30px;
   color: #333;
-  font-size: 2rem;
+  font-size: 2.5rem;
   text-align: center;
 }
 
@@ -58,8 +58,26 @@
 }
 
 .job-item .buttons-container {
-  margin-left: auto; /* pousse le conteneur vers la droite */
+  margin-left: auto;
   display: flex;
-  gap: 10px; /* espace entre les boutons */
+  gap: 10px; 
+}
+
+.filter-input {
+  display: block;           
+  margin: 0 auto 20px auto;
+  padding: 10px 15px;       
+  width: 50%;       
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  margin-bottom: 30px;
+}
+
+.filter-input:focus {
+  outline: none;
+  border-color: #4CAF50;  
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }
 

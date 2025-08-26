@@ -7,6 +7,8 @@ import { deleteJob } from "../api"; // ajouter deleteJob
 const JobList = () => {
   const [jobs, setJobs] = useState([]);
   const navigate = useNavigate();
+  const [filter, setFilter] = useState("");
+
 
   useEffect(() => {
     fetchJobs();
@@ -32,13 +34,30 @@ const JobList = () => {
     }
   };
 
+
+
   return (
     <div className="job-list-container">
-      <h2>Job Offers</h2>
+      <h1>Job Offers</h1>
+      <input
+        type="text"
+        placeholder="Filter by Title, Company or Location"
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
+        className="filter-input"
+      />
+
       <ul>
-        {jobs.map((job) => (
+        {jobs  
+        .filter(
+            (job) =>
+              job.title.toLowerCase().includes(filter.toLowerCase()) ||
+              job.company.toLowerCase().includes(filter.toLowerCase()) ||
+              job.location.toLowerCase().includes(filter.toLowerCase())
+          )
+        .map((job) => (
         <li className="job-item" key={job.id}>
-          <strong>{job.title}</strong> @{job.company}
+          <strong>{job.title}</strong> @{job.company}  ,<strong style={{marginLeft:"10px"}}><i>{job.location}</i></strong>
           <div className="buttons-container">
             <button className="delete-btn" onClick={() => handleDelete(job.id)}>Delete</button>
             <button onClick={() => viewMatches(job.id)}>View Matches</button>
