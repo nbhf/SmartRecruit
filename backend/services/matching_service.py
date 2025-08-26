@@ -8,15 +8,6 @@ from models.match import CVJobMatch
 
 def save_cv_job_matches(matches, job_id):
     for match in matches:
-        existing = CVJobMatch.query.filter_by(cv_id=match["cv_id"], job_id=job_id).first()
-        if existing:
-            # Met à jour si le matching existe déjà
-            existing.score = match["score"]
-            existing.skills_match = match["skills_match"]
-            existing.experience_match = match["experience_match"]
-            existing.education_match = match["education_match"]
-            existing.justification = match["justification"]
-        else:
             new_match = CVJobMatch(
                 cv_id=match["cv_id"],
                 job_id=job_id,
@@ -77,7 +68,7 @@ Return ONLY valid JSON like this:
   "justification": "..."
 }}
 
-⚠️ All numeric fields MUST be integers between 0 and their maximum (score: 0–100, skills_match: 0–50, experience_match: 0–30, education_match: 0–20). 
+ All numeric fields MUST be integers between 0 and their maximum (score: 0–100, skills_match: 0–50, experience_match: 0–30, education_match: 0–20). 
 Do not return strings or fractions like '25/100'.
 
 Do not include markdown, backticks or this ```json
@@ -106,23 +97,41 @@ def match_all_cvs_to_job(job_id: int):
     matches = []
 
     for cv in cvs:
-        score_data = score_cv_for_job(cv, job)
-        if score_data:
+        # Vérifie si ce CV est déjà matché avec ce job
+        existing_match = CVJobMatch.query.filter_by(cv_id=cv.id, job_id=job_id).first()
+        
+        if existing_match:
+            # Ajoute le match existant sans refaire le scoring
             matches.append({
                 "cv_id": cv.id,
                 "cv_name": cv.name,
-                "score": score_data.get("score"),
-                "skills_match": score_data.get("skills_match"),
-                "experience_match": score_data.get("experience_match"),
-                "education_match": score_data.get("education_match"),
-                "justification": score_data.get("justification")
+                "score": existing_match.score,
+                "skills_match": existing_match.skills_match,
+                "experience_match": existing_match.experience_match,
+                "education_match": existing_match.education_match,
+                "justification": existing_match.justification
             })
+        else:
+            # Si pas encore matché → calcul via LLM
+            score_data = score_cv_for_job(cv, job)
+            if score_data:
+                new_match = {
+                    "cv_id": cv.id,
+                    "cv_name": cv.name,
+                    "score": score_data.get("score"),
+                    "skills_match": score_data.get("skills_match"),
+                    "experience_match": score_data.get("experience_match"),
+                    "education_match": score_data.get("education_match"),
+                    "justification": score_data.get("justification")
+                }
+                matches.append(new_match)
+
+                # Sauvegarde direct en DB pour éviter double traitement
+                save_cv_job_matches([new_match], job_id)
 
     # Tri décroissant par score
     matches.sort(key=lambda x: x["score"], reverse=True)
 
-    # Enregistre dans la base
-    save_cv_job_matches(matches, job_id)
-
     return matches
+
 

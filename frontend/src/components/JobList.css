@@ -33,6 +33,7 @@
 .job-item strong {
   font-size: 1.1rem;
   color: #111;
+  margin-right: 10px;
 }
 
 .job-item button {
@@ -46,5 +47,19 @@
 
 .job-item button:hover {
   background-color: #45a049;
+}
+
+.job-item .delete-btn {
+  background-color: #f44336; 
+}
+
+.job-item .delete-btn:hover {
+  background-color: #d32f2f;
+}
+
+.job-item .buttons-container {
+  margin-left: auto; /* pousse le conteneur vers la droite */
+  display: flex;
+  gap: 10px; /* espace entre les boutons */
 }
 

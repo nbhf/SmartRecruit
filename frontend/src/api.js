@@ -30,3 +30,13 @@ export const getJobMatches = async (jobId) => {
   const res = await axios.get(`${API_URL}/jobs/${jobId}/match`);
   return res.data;  // liste de matches triée côté backend
 };
+
+export const deleteJob = async (jobId) => {
+  const response = await fetch(`${API_URL}/jobs/${jobId}`, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    throw new Error("Failed to delete job");
+  }
+  return true;
+};

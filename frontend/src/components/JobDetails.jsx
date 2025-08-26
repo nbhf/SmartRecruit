@@ -27,7 +27,7 @@ const JobDetails = () => {
       }
     };
 
-    if (jobId) fetchData(); //  évite d’appeler si jobId est null
+    if (jobId) fetchData(); 
   }, [jobId]); //  Dépendance pour éviter boucle infinie
 
   if (loading) return <h1 style={{textAlign:"center"}}>Loading...</h1>;

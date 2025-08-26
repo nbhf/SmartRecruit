@@ -57,3 +57,13 @@ def match_job(job_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
+from models.job import JobOffer, db
+
+@job_bp.route("/jobs/<int:job_id>", methods=["DELETE"])
+def delete_job(job_id):
+    job = JobOffer.query.get(job_id)
+    if not job:
+        return jsonify({"error": "Job not found"}), 404
+    db.session.delete(job)
+    db.session.commit()
+    return jsonify({"message": "Job deleted"}), 200
