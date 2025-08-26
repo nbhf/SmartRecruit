@@ -1,5 +1,3 @@
-# pip install langchain unstructured PyPDF2 openai
-
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
@@ -52,7 +50,9 @@ def analyze_cv(filepath):
     }
 
     for doc in documents:
-        response = chain.run(doc.page_content)
+        full_text = " ".join([doc.page_content for doc in documents])
+        response = chain.run(full_text)
+
         try:
             cleaned_response = response.replace('```json', '').replace('```', '').strip()
             data = json.loads(cleaned_response)
