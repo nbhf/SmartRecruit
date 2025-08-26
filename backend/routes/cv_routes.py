@@ -1,10 +1,10 @@
 from flask import Blueprint, request, jsonify
 from services.cv_parser import extract_text
-from services.ai_service import analyze_cv
+#from services.ai_service import analyze_cv
+from services.ai_service1 import analyze_cv
 import os
-import json
 from datetime import datetime
-from models.cv import  CV  # Importez vos modèles
+from models.cv import  CV 
 from models.job import db
 
 cv_bp = Blueprint("cv_bp", __name__)
@@ -22,10 +22,10 @@ def upload_cv():
     file.save(filepath)
 
     # Extraction du texte
-    text = extract_text(filepath)
+    #text = extract_text(filepath)
     
     # Analyse avec AI
-    analysis_data = analyze_cv(text)  # analysis_data est déjà un dict
+    analysis_data = analyze_cv(filepath) 
     
     # Vérifier si il y a une erreur dans l'analyse
     if "error" in analysis_data:
