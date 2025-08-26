@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { addJobOffer } from "../api";
 import './AddJobOffer.css';
+import { useNavigate } from "react-router-dom";
+
 
 const AddJobOffer = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +13,9 @@ const AddJobOffer = () => {
     salary: ""
   });
 
+  const navigate = useNavigate();
+  
+
   const handleChange = (e) => {
     setFormData({...formData, [e.target.name]: e.target.value });
   };
@@ -20,6 +25,8 @@ const AddJobOffer = () => {
     await addJobOffer(formData);
     alert("Job offer added successfully!");
     setFormData({ title: "", description: "", company: "", location: "", salary: "" });
+    navigate(`/`);
+
   };
 
   return (

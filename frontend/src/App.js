@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import UploadCV from "./components/UploadCV";
 import CVResult from "./components/CVResult";
 import AddJobForm from "./components/AddJobOffer";
@@ -14,21 +14,37 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <Routes>
-        <Route path="/upload"
-          element={
-            <div>
-              <UploadCV setResult={setResult} setLoading={setLoading} />
-              {loading && <p style={{ textAlign: "center" }}> Loading...</p>}
-              {!loading && result && <CVResult data={result} />}
-            </div>
-          }
-        />
-        <Route path="/addoffer" element={<AddJobForm />} />
-        <Route path="/" element={<JobList />} />
-        <Route path="/jobdetails/:jobId" element={<JobDetails />} />
-      </Routes>
+      <AppRoutes result={result} setResult={setResult} loading={loading} setLoading={setLoading} />
     </Router>
+  );
+}
+
+
+function AppRoutes({ result, setResult, loading, setLoading }) {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname !== "/upload") {
+      setResult(null); // reset quand on quitte /upload
+    }
+  }, [location, setResult]);
+
+  return (
+    <Routes>
+      <Route
+        path="/upload"
+        element={
+          <div>
+            <UploadCV setResult={setResult} setLoading={setLoading} />
+            {loading && <p style={{ textAlign: "center" }}>Loading...</p>}
+            {!loading && result && <CVResult data={result} />}
+          </div>
+        }
+      />
+      <Route path="/addoffer" element={<AddJobForm />} />
+      <Route path="/" element={<JobList />} />
+      <Route path="/jobdetails/:jobId" element={<JobDetails />} />
+    </Routes>
   );
 }
 
