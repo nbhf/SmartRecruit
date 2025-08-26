@@ -67,3 +67,21 @@ def delete_job(job_id):
     db.session.delete(job)
     db.session.commit()
     return jsonify({"message": "Job deleted"}), 200
+
+
+@job_bp.route('/jobs/bulk', methods=['POST'])
+def add_jobs_bulk():
+    jobs = request.json  # attendu: une liste de jobs
+    added_jobs = []
+    for job_data in jobs:
+        job = JobOffer(
+            title=job_data['title'],
+            description=job_data['description'],
+            company=job_data['company'],
+            location=job_data['location'],
+            salary=job_data.get('salary')
+        )
+        db.session.add(job)
+        added_jobs.append(job_data)
+    db.session.commit()
+    return jsonify({"added": added_jobs}), 201
