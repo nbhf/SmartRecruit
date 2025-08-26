@@ -33,12 +33,13 @@ export default function UploadCV({ setResult, setLoading }) {
 
   return (
     <div className="upload-container">
-      <h2>Upload your CV</h2>
+      <h1>Upload New CV</h1>
       <input
         type="file"
         onChange={handleFileChange}
         ref={fileInputRef}
         accept=".pdf"
+        style={{ fontSize:"20px"}}
       />
       <button onClick={handleUpload}>Upload CV</button>
     </div>
