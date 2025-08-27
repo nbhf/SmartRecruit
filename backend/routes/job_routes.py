@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from services.job_service import create_job_offer
 from models.job import JobOffer
 from services.matching_service import match_all_cvs_to_job
+from models.job import JobOffer, db
 
 
 job_bp = Blueprint("job_bp", __name__)
@@ -26,11 +27,13 @@ def add_job():
         return jsonify({"error": str(e)}), 400
 
 
+
 @job_bp.route("/jobs/all", methods=["GET"])
 def get_all_jobs():
     jobs = JobOffer.query.order_by(JobOffer.created_at.desc()).all()
     result = [ { "id": job.id, "title": job.title, "company": job.company , "location": job.location } for job in jobs ]
     return jsonify(result)
+
 
 
 @job_bp.route("/jobs/<int:job_id>", methods=["GET"])
@@ -49,6 +52,8 @@ def get_job(job_id):
         "created_at": job.created_at
     })
 
+
+
 @job_bp.route("/jobs/<int:job_id>/match", methods=["GET"])
 def match_job(job_id):
     try:
@@ -57,7 +62,7 @@ def match_job(job_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-from models.job import JobOffer, db
+
 
 @job_bp.route("/jobs/<int:job_id>", methods=["DELETE"])
 def delete_job(job_id):
@@ -69,9 +74,10 @@ def delete_job(job_id):
     return jsonify({"message": "Job deleted"}), 200
 
 
+ # to add jobs in bulk (postman)
 @job_bp.route('/jobs/bulk', methods=['POST'])
 def add_jobs_bulk():
-    jobs = request.json  # attendu: une liste de jobs
+    jobs = request.json 
     added_jobs = []
     for job_data in jobs:
         job = JobOffer(

@@ -1,9 +1,6 @@
 from flask import Blueprint, request, jsonify
-from services.cv_parser import extract_text
-#from services.ai_service import analyze_cv
-from services.ai_service1 import analyze_cv
+from services.ai_service import analyze_cv
 import os
-from datetime import datetime
 from models.cv import  CV 
 from models.job import db
 
@@ -20,14 +17,10 @@ def upload_cv():
 
     filepath = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(filepath)
-
-    # Extraction du texte
-    #text = extract_text(filepath)
     
     # Analyse avec AI
     analysis_data = analyze_cv(filepath) 
     
-    # Vérifier si il y a une erreur dans l'analyse
     if "error" in analysis_data:
         return jsonify({"error": analysis_data["error"]}), 500
     
@@ -49,7 +42,7 @@ def upload_cv():
         return jsonify({
             "message": "CV analysé et enregistré avec succès",
             "cv_id": new_cv.id,
-            "analysis": analysis_data  # Déjà un dict, Flask le convertira en JSON
+            "analysis": analysis_data  
         })
         
     except Exception as e:

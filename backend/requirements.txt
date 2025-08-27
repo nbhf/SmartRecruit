@@ -1,0 +1,12 @@
+flask 
+flask-cors 
+flask-sqlalchemy
+psycopg2 
+langchain
+langchain-google-genai
+pdfplumber 
+PyMuPDF  
+google-generativeai
+unstructured 
+PyPDF2 
+openai

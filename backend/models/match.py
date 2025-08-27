@@ -1,4 +1,3 @@
-from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from models.job import db
 
@@ -15,6 +14,6 @@ class CVJobMatch(db.Model):
     justification = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    # Relations optionnelles pour facilité de jointure
+    # Relations 
     cv = db.relationship("CV",  backref=db.backref("job_matches", cascade="all, delete-orphan"))
     job = db.relationship("JobOffer", backref=db.backref("job_matches", cascade="all, delete-orphan"))

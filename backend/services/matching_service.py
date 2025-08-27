@@ -43,37 +43,36 @@ def score_cv_for_job(cv: CV, job: JobOffer):
     })
 
     prompt = f"""
-You are an expert recruiter.
-Evaluate how well this candidate fits the following job offer.
+            You are an expert recruiter.
+            Evaluate how well this candidate fits the following job offer.
 
-Job Offer:
-{job_json}
+            Job Offer:
+            {job_json}
 
-Candidate CV:
-{cv_json}
+            Candidate CV:
+            {cv_json}
 
-Scoring Criteria (total 100 points):
-- Skills match: 50 points
-- Experience match: 30 points
-- Education match: 20 points
+            Scoring Criteria (total 100 points):
+            - Skills match: 50 points
+            - Experience match: 30 points
+            - Education match: 20 points
 
-Return ONLY  valid JSON objects:
-Return ONLY valid JSON like this:
-{{
-  "Candidate name": "...",
-  "score": 78,
-  "skills_match": 40,
-  "experience_match": 25,
-  "education_match": 13,
-  "justification": "..."
-}}
+            Return ONLY  valid JSON objects:
+            Return ONLY valid JSON like this:
+            {{
+            "Candidate name": "...",
+            "score": 78,
+            "skills_match": 40,
+            "experience_match": 25,
+            "education_match": 13,
+            "justification": "..."
+            }}
 
- All numeric fields MUST be integers between 0 and their maximum (score: 0–100, skills_match: 0–50, experience_match: 0–30, education_match: 0–20). 
-Do not return strings or fractions like '25/100'.
+            All numeric fields MUST be integers between 0 and their maximum (score: 0–100, skills_match: 0–50, experience_match: 0–30, education_match: 0–20). 
+            Do not return strings or fractions like '25/100'.
 
-Do not include markdown, backticks or this ```json
-
-"""
+            Do not include markdown, backticks or this ```json
+            """
 
     response = llm.invoke(prompt)
     print("RAW LLM RESPONSE:", response.content)
@@ -85,6 +84,7 @@ Do not include markdown, backticks or this ```json
     except Exception as e:
         print("Error parsing LLM response:", e)
         return None
+
 
 
 
@@ -126,7 +126,7 @@ def match_all_cvs_to_job(job_id: int):
                 }
                 matches.append(new_match)
 
-                # Sauvegarde direct en DB pour éviter double traitement
+                # Sauvegarde 
                 save_cv_job_matches([new_match], job_id)
 
     # Tri décroissant par score

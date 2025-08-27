@@ -16,7 +16,6 @@ const JobDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        //  Appels backend avec le jobId
         const jobData = await getJobDetails(jobId);
         setJob(jobData);
 
@@ -31,7 +30,7 @@ const JobDetails = () => {
     };
 
     if (jobId) fetchData(); 
-  }, [jobId]); //  Dépendance pour éviter boucle infinie
+  }, [jobId]);
 
   if (loading && job) return( 
     <div className="job-details-container">

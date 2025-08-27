@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAllJobs } from "../api";
 import { useNavigate } from "react-router-dom";
 import './JobList.css';
-import { deleteJob } from "../api"; // ajouter deleteJob
+import { deleteJob } from "../api"; 
 
 const JobList = () => {
   const [jobs, setJobs] = useState([]);
@@ -26,8 +26,8 @@ const JobList = () => {
   const handleDelete = async (jobId) => {
     if (window.confirm("Are you sure you want to delete this job?")) {
       try {
-        await deleteJob(jobId); // API call
-        setJobs(jobs.filter(job => job.id !== jobId)); // update state
+        await deleteJob(jobId); 
+        setJobs(jobs.filter(job => job.id !== jobId)); 
       } catch (error) {
         console.error("Error deleting job:", error);
       }

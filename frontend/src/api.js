@@ -28,7 +28,7 @@ export const getJobDetails = async (jobId) => {
 
 export const getJobMatches = async (jobId) => {
   const res = await axios.get(`${API_URL}/jobs/${jobId}/match`);
-  return res.data;  // liste de matches triée côté backend
+  return res.data;  
 };
 
 export const deleteJob = async (jobId) => {

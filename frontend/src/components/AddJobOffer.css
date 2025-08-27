@@ -1,4 +1,3 @@
-/* General form container */
 .form-container {
   max-width: 800px;
   margin: 40px auto;
@@ -9,7 +8,6 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Form title */
 .form-container h2 {
   text-align: center;
   color: #333;
@@ -17,7 +15,6 @@
   font-size: 1.6rem;
 }
 
-/* Input fields */
 .form-container input,
 .form-container textarea,
 .form-container select {
@@ -30,7 +27,6 @@
   transition: border 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Hover/focus effects */
 .form-container input:focus,
 .form-container textarea:focus,
 .form-container select:focus {
@@ -39,7 +35,6 @@
   outline: none;
 }
 
-/* Labels */
 .form-container label {
   display: block;
   font-weight: 500;
@@ -48,7 +43,6 @@
   margin-bottom: 6px;
 }
 
-/* Button */
 .form-container button {
   width: 100%;
   padding: 12px;
@@ -67,7 +61,6 @@
   background: #357abd;
 }
 
-/* Responsive */
 @media (max-width: 600px) {
   .form-container {
     margin: 20px;
