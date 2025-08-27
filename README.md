@@ -18,9 +18,10 @@ cd SmartRecruit
 ```
 
 ### 2. Configurer la base de données
+```bash
 createdb -U postgres SmartRecruit
 psql -U postgres -d SmartRecruit -f db/init.sql
-
+```
 
 ### 3. Backend
 ```bash
